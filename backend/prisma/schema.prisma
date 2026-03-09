@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  type        ProductType @default(COUPON)
+  image_url   String
+  coupon      Coupon?
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+}
+
+model Coupon {
+  id                 String          @id @default(auto()) @map("_id") @db.ObjectId
+  product            Product         @relation(fields: [productId], references: [id])
+  productId          String          @unique @db.ObjectId
+  cost_price         Float
+  margin_percentage  Float
+  minimum_sell_price Float
+  is_sold            Boolean         @default(false)
+  sold_at            DateTime?
+  value_type         CouponValueType
+  value              String          @unique
+  created_at         DateTime        @default(now())
+}
+
+enum ProductType {
+  COUPON
+}
+
+enum CouponValueType {
+  STRING
+  IMAGE
+}
