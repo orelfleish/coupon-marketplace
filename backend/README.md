@@ -1,10 +1,11 @@
-# Digital Coupon Marketplace — Backend
+# Coupon Marketplace — Backend
 
-A backend system for a digital coupon marketplace supporting two selling channels: direct customers and external resellers via REST API.
+A backend system for a coupon marketplace supporting two selling channels: direct customers and external resellers via REST API.
 
 ## Tech Stack
 
-- **Runtime**: Node.js + TypeScript
+- **Runtime**: Node.js 
+- **Language**: TypeScript
 - **Framework**: Express
 - **Database**: MongoDB
 - **ORM**: Prisma
