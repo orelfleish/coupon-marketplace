@@ -23,6 +23,25 @@ src/
 └── index.ts         # Entry point
 ```
 
+## Architecture
+
+```mermaid
+flowchart TD
+    Admin[Admin<br/>x-admin-key header] -->|CRUD coupons| Routes
+    Reseller[Reseller<br/>Bearer JWT token] -->|browse & purchase| Routes
+    Customer[Customer<br/>public, no auth] -->|browse & purchase| Routes
+
+    Routes[Express Routes] --> MW[Auth Middleware<br/>adminAuth / resellerAuth]
+    MW --> Controller[Controllers<br/>coupon.controller.ts]
+    Controller --> Service[Services<br/>coupon.service.ts<br/>pricing logic]
+    Service --> Repo[Repositories<br/>product.repository.ts]
+    Repo --> Prisma[(Prisma ORM)]
+    Prisma --> Mongo[(MongoDB)]
+
+    Reseller -.->|1. POST /auth/token| Auth[Auth Route]
+    Auth -.->|2. returns JWT| Reseller
+```
+
 ## Getting Started
 
 ### Prerequisites
